@@ -150,7 +150,7 @@ export const Bio = {
   export const experiences = [
     {
       id: 0,
-      img: "https://upload.wikimedia.org/wikipedia/commons/e/e6/L%26T_finance.jpeg",
+      img: "https://github.com/Prats222/Java-Practice/assets/126672828/54778168-901d-48ac-853f-f7719534bfc4",
       role: "SDE Intern",
       company: "L&T Finance",
       date: "16th August 2023 - 15th September 2023",
@@ -175,7 +175,7 @@ export const Bio = {
       role: "SDE Intern",
       company: "BEL(BHARAT ELECTRONICS LIMITED)",
       date: "27th September 2023 - 26th October 2023",
-      desc: "Working on Web-GIS for military use.",
+      desc: "Worked on Web-GIS for military use.",
       skills: [
         "ReactJS",
         "Redux",
@@ -186,7 +186,27 @@ export const Bio = {
         "OpenLayers",
         "MongoDB"
       ],
-      
+      Dlink:"https://github.com/Prats222/Java-Practice/assets/126672828/d1bee3c2-6774-4805-9c31-9a489249f4b4"
+    },
+    {
+      id: 2,
+      img: "https://github.com/Prats222/Java-Practice/assets/126672828/facea5dc-c90e-49c6-996b-d24d5f96acfa",
+      role: "Web Developer Intern",
+      company: "Green Dumbells",
+      date: "4th October 2023 - 3rd December 2023",
+      desc: "Worked on official website of Green Dumbells (https://greendumbells.com/)",
+      skills: [
+        "ReactJS",
+        "Redux",
+        "NodeJs",
+        "NextJs",
+        "Tailwind-CSS",
+        "JavaScript",
+        "Express JS",
+        "TypeScript",
+        "MongoDB"
+      ],
+      Dlink:"https://github.com/Prats222/Java-Practice/assets/126672828/db2188cf-f815-4c52-b08d-b815e8e0edff"
     },
   ];
   
@@ -299,6 +319,39 @@ export const Bio = {
       github: "https://github.com/Prats222/Speech-To-Text",
       webapp: "https://speech-to-text-ruby.vercel.app/",
     },
-    // 
+    //
+    {
+      id: 0,
+      title: "Green Dumbells Website",
+      description:
+        "A tech-enabled service-based fitness community that supports natural ways to achieve body goals externally as well as internally. Get personalized exercise and meal plans to suit your body type, mental well-being, and physical capacity",
+      image:
+        "https://github.com/Prats222/Java-Practice/assets/126672828/facea5dc-c90e-49c6-996b-d24d5f96acfa",
+      tags: [ "ReactJS",
+         "Redux",
+         "NodeJs",
+         "NextJs",
+         "Tailwind-CSS",
+         "JavaScript",
+         "Express JS",
+         "TypeScript",
+        "MongoDB"],
+      category: "android app",
+      github: "",
+      webapp: "https://greendumbells.com/",
+    }, 
+
+    {
+      id: 1,
+      title: "Web GIS",
+      description:
+        "Object proximity alert system using GIS is an open-source Geographic Information System (GIS) project that leverages various technologies to create interactive maps and geospatial applications. It is built using OpenLayers, GeoServer, JavaScript, Bootstrap, HTML, jQuery, and MongoDB",
+      image:
+        "https://private-user-images.githubusercontent.com/126672828/277746384-75bf4d65-d930-496d-8f64-6b375935d77d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDI4OTEwNjUsIm5iZiI6MTcwMjg5MDc2NSwicGF0aCI6Ii8xMjY2NzI4MjgvMjc3NzQ2Mzg0LTc1YmY0ZDY1LWQ5MzAtNDk2ZC04ZjY0LTZiMzc1OTM1ZDc3ZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMjE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTIxOFQwOTEyNDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mYzNjZDZkZjAzZWY3MTE5ZjVmYjAxZWNhNDE3NzAyYmQ2OTEzNmQzZDIxMDBiYmQ1YzMzMDQ5MTlkYmYzOGQyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.UWivc0c-mcJ1BlQXs-HYBm8-iEzoepyy4eSsYOobrLw",
+      tags: [ "OpenLayers","Leaflet", "GeoServer", "Javascript","Bootstrap","HTML","Jquery","MongoDB","Tomcat"],
+      category: "android app",
+      github: "https://github.com/Prats222/GIS",
+      webapp: "",
+    }, 
   ];
   
