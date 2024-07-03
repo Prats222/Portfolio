@@ -215,7 +215,7 @@ export const Bio = {
       id: 0,
       img: "https://findlogovector.com/wp-content/uploads/2022/05/vellore-institute-of-technology-vit-logo-vector-2022.png",
       school: "Vellore Institute Of Technology,Vellore",
-      grade:"7.5 cgpa",
+      grade:"8.43 cgpa",
       date: "Sep 2021 - Sep 2025",
       degree: "Bachelor of Technology - BTech, Computer Science and Engineering",
     },
