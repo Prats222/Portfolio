@@ -319,6 +319,17 @@ export const Bio = {
       github: "https://github.com/Prats222/Speech-To-Text",
       webapp: "https://speech-to-text-ruby.vercel.app/",
     },
+    {
+      id: 5,
+      title: "Crypto-Prats",  
+      description:"Crypto-Tracker is a user-friendly web app showcasing cryptocurrency rankings, live currency conversion, and streamlined search capabilities. It offers detailed insights for each coin, including 10-day price trends and essential metrics like current price, market cap, and daily highs and lows.",
+      image:
+        "https://github.com/Prats222/Prats222/assets/126672828/53b2fe5c-ef93-437c-a8fd-1a2e7268afe9",
+      tags: ["ReactJS","context","Coin-Gecko API"],
+      category: "web app",
+      github: "https://github.com/Prats222/Crypto",
+      webapp: "https://crypto-prats.vercel.app/",
+    },
     //
     {
       id: 0,
@@ -347,7 +358,7 @@ export const Bio = {
       description:
         "Object proximity alert system using GIS is an open-source Geographic Information System (GIS) project that leverages various technologies to create interactive maps and geospatial applications. It is built using OpenLayers, GeoServer, JavaScript, Bootstrap, HTML, jQuery, and MongoDB",
       image:
-        "https://private-user-images.githubusercontent.com/126672828/277746384-75bf4d65-d930-496d-8f64-6b375935d77d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDI4OTEwNjUsIm5iZiI6MTcwMjg5MDc2NSwicGF0aCI6Ii8xMjY2NzI4MjgvMjc3NzQ2Mzg0LTc1YmY0ZDY1LWQ5MzAtNDk2ZC04ZjY0LTZiMzc1OTM1ZDc3ZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMjE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTIxOFQwOTEyNDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mYzNjZDZkZjAzZWY3MTE5ZjVmYjAxZWNhNDE3NzAyYmQ2OTEzNmQzZDIxMDBiYmQ1YzMzMDQ5MTlkYmYzOGQyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.UWivc0c-mcJ1BlQXs-HYBm8-iEzoepyy4eSsYOobrLw",
+        "https://github.com/Prats222/GIS-BEL/assets/126672828/75bf4d65-d930-496d-8f64-6b375935d77d",
       tags: [ "OpenLayers","Leaflet", "GeoServer", "Javascript","Bootstrap","HTML","Jquery","MongoDB","Tomcat"],
       category: "android app",
       github: "https://github.com/Prats222/GIS",
