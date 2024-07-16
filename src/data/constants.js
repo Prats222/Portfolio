@@ -7,7 +7,7 @@ export const Bio = {
       "Programmer",
     ],
     description:
-      "I'm a Pre-final-year B.Tech student at VIT Vellore, passionate about full-stack development. From front-end design to back-end functionality, I enjoy tackling tech challenges. With a growth mindset and a zest for learning, I'm ready to make a meaningful impact. Let's connect and explore new opportunities!",
+      "I'm a Final-year B.Tech student at VIT Vellore, passionate about full-stack development. From front-end design to back-end functionality, I enjoy tackling tech challenges. With a growth mindset and a zest for learning, I'm ready to make a meaningful impact. Let's connect and explore new opportunities!",
     github: "https://github.com/Prats222",
     resume:
       "https://drive.google.com/file/d/1POvYZYrq--BfwYi6DGEs_HxM-SAmYXzU/view?usp=sharing",
