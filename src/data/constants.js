@@ -10,7 +10,7 @@ export const Bio = {
       "I'm a Final-year B.Tech student at VIT Vellore, passionate about full-stack development. From front-end design to back-end functionality, I enjoy tackling tech challenges. With a growth mindset and a zest for learning, I'm ready to make a meaningful impact. Let's connect and explore new opportunities!",
     github: "https://github.com/Prats222",
     resume:
-      "https://drive.google.com/file/d/1POvYZYrq--BfwYi6DGEs_HxM-SAmYXzU/view?usp=sharing",
+      "https://drive.google.com/file/d/1OaoZ3i3yPXLOBM8BrH51NOxEbk-0pxse/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/prateek-mishra-686945243/",
     twitter: "https://x.com/Prateek45571540?t=dddhKb_fWFP6EHIYBPXBEw&s=09",
     insta: "https://instagram.com/prats22_?igshid=NzZlODBkYWE4Ng==",
