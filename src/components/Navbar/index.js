@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from 'styled-components';
-import { Nav, NavLink, NavbarContainer, Span, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileNavLogo, MobileLink } from './NavbarStyledComponent'
+import { Nav, NavLink, NavbarContainer, Span, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileLink } from './NavbarStyledComponent'
 import {PiFinnTheHumanFill } from 'react-icons/pi';
 import { FaBars } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
@@ -12,9 +12,9 @@ const Navbar = () => {
     <Nav>
       <NavbarContainer>
         <NavLogo to='/'>
-          <a style={{ display: "flex", alignItems: "center", color: "white", marginBottom: '20;', cursor: 'pointer' }}>
+          <div style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
             <PiFinnTheHumanFill size="3rem" /> <Span>PRATSFOLIO</Span>
-          </a>
+          </div>
         </NavLogo>
         <MobileIcon>
           <FaBars onClick={() => {

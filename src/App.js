@@ -10,7 +10,7 @@ import Projects from './components/Projects';
 import Education2 from './components/Education/index';
 import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import Contact from './components/Contact';
 import { MdDarkMode } from 'react-icons/md';
 import {HiOutlineLightBulb} from 'react-icons/hi'
