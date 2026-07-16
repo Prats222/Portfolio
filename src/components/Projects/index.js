@@ -12,33 +12,33 @@ return (
     <Container id="projects">
       <Wrapper>
         <Title>Projects</Title>
-        <Desc>Here are some of my projects.</Desc>
+        <Desc>Products and engineering work spanning agentic AI, full-stack development, and automation.</Desc>
         <ToggleButtonGroup>
           {toggle === 'web app' ? (
             <ToggleButton active value="web app" onClick={() => setToggle('web app')}>
-              WEB APP'S 
+              PRODUCT PROJECTS
             </ToggleButton>
           ) : (
             <ToggleButton value="web app" onClick={() => setToggle('web app')}>
-              WEB APP'S
+              PRODUCT PROJECTS
             </ToggleButton>
           )}
           <Divider />
           {toggle === 'android app' ?
-            <ToggleButton active value="android app" onClick={() => setToggle('android app')}>Intern Work</ToggleButton>
+            <ToggleButton active value="android app" onClick={() => setToggle('android app')}>INDUSTRY PROJECTS</ToggleButton>
             :
-            <ToggleButton value="android app" onClick={() => setToggle('android app')}>Intern Work</ToggleButton>
+            <ToggleButton value="android app" onClick={() => setToggle('android app')}>INDUSTRY PROJECTS</ToggleButton>
           }
         </ToggleButtonGroup>
         <CardContainer>
           {toggle === 'all' &&
             projects.map((project) => (
-              <ProjectCard project={project} openModal={openModal} setOpenModal={setOpenModal} />
+              <ProjectCard key={project.id} project={project} openModal={openModal} setOpenModal={setOpenModal} />
             ))}
           {projects
             .filter((item) => item.category === toggle)
             .map((project) => (
-              <ProjectCard project={project} openModal={openModal} setOpenModal={setOpenModal} />
+              <ProjectCard key={project.id} project={project} openModal={openModal} setOpenModal={setOpenModal} />
             ))}
         
         </CardContainer>

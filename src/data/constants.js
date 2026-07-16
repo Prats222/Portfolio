@@ -1,13 +1,13 @@
 export const Bio = {
     name: "Prateek Mishra",
     roles: [
-      "Full Stack Developer",
-      "React Developer",
-      "Gamer",
-      "Programmer",
+      "Software Engineer",
+      "Agentic AI Builder",
+      ".NET & React Developer",
+      "Test Automation Engineer",
     ],
     description:
-      "I'm a Final-year B.Tech student at VIT Vellore, passionate about full-stack development. From front-end design to back-end functionality, I enjoy tackling tech challenges. With a growth mindset and a zest for learning, I'm ready to make a meaningful impact. Let's connect and explore new opportunities!",
+      "Software engineer at Ascendion working across AI-driven QA orchestration, Android and Windows automation, and large-scale test engineering. I also build full-stack products with .NET and React, including PratsPilot, a live platform for creating, orchestrating, governing, and evaluating AI agents.",
     github: "https://github.com/Prats222",
     resume:
       "https://drive.google.com/file/d/1OaoZ3i3yPXLOBM8BrH51NOxEbk-0pxse/view?usp=sharing",
@@ -21,6 +21,10 @@ export const Bio = {
     {
       title: "Frontend",
       skills: [
+        {
+          name: "TypeScript",
+          image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
+        },
         {
           name: "React Js",
           image:
@@ -66,6 +70,18 @@ export const Bio = {
       title: "Backend",
       skills: [
         {
+          name: ".NET 10 / ASP.NET Core",
+          image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original.svg",
+        },
+        {
+          name: "C#",
+          image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg",
+        },
+        {
+          name: "PostgreSQL",
+          image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg",
+        },
+        {
           name: "Node Js",
           image: "https://nodejs.org/static/images/logo.svg",
         },
@@ -101,8 +117,24 @@ export const Bio = {
       ],
     },
     {
-      "title": "Others",
+      "title": "Automation & Engineering",
       "skills": [
+        {
+          "name": "Python",
+          "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+        },
+        {
+          "name": "Playwright",
+          "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/playwright/playwright-original.svg"
+        },
+        {
+          "name": "Selenium",
+          "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/selenium/selenium-original.svg"
+        },
+        {
+          "name": "Docker",
+          "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg"
+        },
         {
           "name": "Git",
           "image": "https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png"
@@ -135,6 +167,27 @@ export const Bio = {
   export const experiences = [
     {
       id: 0,
+      img: "https://www.ascendion.com/favicon.ico",
+      role: "Associate Software Engineer - Quality Engineering",
+      company: "Ascendion | HP Inc. (HPX Track)",
+      date: "November 2024 - Present",
+      desc: "Building AI-driven test-generation orchestration and automation for HP's Android and Windows platforms. Implemented multi-agent QAMA workflows across 53+ application modules, developed 120+ agents, 120+ workflows and 250+ contextualization documents, automated Android and Windows scenarios, and delivered 200+ Playwright and TypeScript test cases for the PrintOS team.",
+      skills: [
+        "Python",
+        "Pytest",
+        "Playwright",
+        "TypeScript",
+        "Selenium",
+        "AI Agent Workflows",
+        "TestRail",
+        "Azure Pipelines",
+        "GitHub",
+        "Android Automation",
+        "Windows Automation"
+      ]
+    },
+    {
+      id: 1,
       img: "https://github.com/Prats222/Java-Practice/assets/126672828/54778168-901d-48ac-853f-f7719534bfc4",
       role: "SDE Intern",
       company: "L&T Finance",
@@ -155,7 +208,7 @@ export const Bio = {
       
     },
     {
-      id: 1,
+      id: 2,
       img: "https://iconape.com/wp-content/files/po/253758/png/bharat-electronics-ltd-logo.png",
       role: "SDE Intern",
       company: "BEL(BHARAT ELECTRONICS LIMITED)",
@@ -174,7 +227,7 @@ export const Bio = {
       Dlink:"https://github.com/Prats222/Java-Practice/assets/126672828/d1bee3c2-6774-4805-9c31-9a489249f4b4"
     },
     {
-      id: 2,
+      id: 3,
       img: "https://github.com/Prats222/Java-Practice/assets/126672828/facea5dc-c90e-49c6-996b-d24d5f96acfa",
       role: "Web Developer Intern",
       company: "Green Dumbells",
@@ -200,8 +253,8 @@ export const Bio = {
       id: 0,
       img: "https://findlogovector.com/wp-content/uploads/2022/05/vellore-institute-of-technology-vit-logo-vector-2022.png",
       school: "Vellore Institute Of Technology,Vellore",
-      grade:"8.43 cgpa",
-      date: "Sep 2021 - Sep 2025",
+      grade:"8.53 CGPA",
+      date: "September 2021 - 2025",
       degree: "Bachelor of Technology - BTech, Computer Science and Engineering",
     },
     {
@@ -223,6 +276,27 @@ export const Bio = {
   ];
   
   export const projects = [
+    {
+      id: 100,
+      title: "PratsPilot - Agentic AI Platform",
+      description:
+        "A production-deployed platform for building AI agents without hardcoded agent implementations. It supports knowledge bases, custom Python tools and secrets, live web search, visual multi-agent workflows, human approval gates, execution observability, multiple LLM providers, realm-based access, Autopilot workflow generation, and creator-vs-creator Agent Battles judged by AI.",
+      image: "/pratspilot-dashboard.png",
+      tags: [
+        ".NET 10",
+        "React",
+        "MUI",
+        "PostgreSQL",
+        "Agentic AI",
+        "LLM Providers",
+        "EF Core",
+        "JWT",
+        "Docker"
+      ],
+      category: "web app",
+      github: "https://github.com/Prats222/Agentic_AI_Platform",
+      webapp: "https://pratspilot.vercel.app/",
+    },
     {
       id: 0,
       title: "PRAT-SHOP",
@@ -317,7 +391,7 @@ export const Bio = {
     },
     //
     {
-      id: 0,
+      id: 6,
       title: "Green Dumbells Website",
       description:
         "A tech-enabled service-based fitness community that supports natural ways to achieve body goals externally as well as internally. Get personalized exercise and meal plans to suit your body type, mental well-being, and physical capacity",
@@ -338,7 +412,7 @@ export const Bio = {
     }, 
 
     {
-      id: 1,
+      id: 7,
       title: "Web GIS",
       description:
         "Object proximity alert system using GIS is an open-source Geographic Information System (GIS) project that leverages various technologies to create interactive maps and geospatial applications. It is built using OpenLayers, GeoServer, JavaScript, Bootstrap, HTML, jQuery, and MongoDB",
