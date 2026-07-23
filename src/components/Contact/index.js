@@ -145,13 +145,13 @@ const Contact = () => {
     <Container>
       <Wrapper>
         <Title>Contact</Title>
-        <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
+        <Desc>Let's connect about software engineering, SDET, test automation, or AI engineering opportunities.</Desc>
         <ContactForm ref={form} onSubmit={handleSubmit}>
-          <ContactTitle>Email Me 🚀</ContactTitle>
+          <ContactTitle>Email Prateek</ContactTitle>
           <ContactInput placeholder="Your Email" name="from_email" />
           <ContactInput placeholder="Your Name" name="from_name" />
           <ContactInput placeholder="Subject" name="subject" />
-          <ContactInputMessage placeholder="Message(Kindly write your Email and Name additionally)" rows="4" name="message" />
+          <ContactInputMessage placeholder="Tell me about the role, project, or opportunity" rows="4" name="message" />
           <ContactButton type="submit" value="Send" />
         </ContactForm>
         <Snackbar

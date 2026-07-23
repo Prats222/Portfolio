@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="32" fill="url(#bg)"/>
+  <circle cx="1030" cy="90" r="180" fill="#4f46e5" opacity=".18"/>
+  <circle cx="130" cy="620" r="230" fill="#2563eb" opacity=".16"/>
+  <rect x="80" y="80" width="1040" height="515" rx="24" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <rect x="80" y="80" width="1040" height="76" rx="24" fill="#172033"/>
+  <circle cx="126" cy="118" r="10" fill="#fb7185"/>
+  <circle cx="158" cy="118" r="10" fill="#fbbf24"/>
+  <circle cx="190" cy="118" r="10" fill="#34d399"/>
+  <text x="235" y="129" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="28" font-weight="700">AUTOMATION PM</text>
+  <text x="110" y="232" fill="#ffffff" font-family="Arial, sans-serif" font-size="56" font-weight="800">Enterprise automation.</text>
+  <text x="110" y="300" fill="url(#accent)" font-family="Arial, sans-serif" font-size="56" font-weight="800">Built to be tested.</text>
+  <text x="112" y="355" fill="#94a3b8" font-family="Arial, sans-serif" font-size="24">ASP.NET Core + React + Playwright</text>
+  <g font-family="Arial, sans-serif" font-size="20" font-weight="700">
+    <rect x="110" y="415" width="126" height="54" rx="12" fill="#dcfce7"/><text x="145" y="449" fill="#166534">GET</text>
+    <rect x="252" y="415" width="126" height="54" rx="12" fill="#dbeafe"/><text x="282" y="449" fill="#1d4ed8">POST</text>
+    <rect x="394" y="415" width="126" height="54" rx="12" fill="#fef3c7"/><text x="432" y="449" fill="#92400e">PUT</text>
+    <rect x="536" y="415" width="138" height="54" rx="12" fill="#ede9fe"/><text x="566" y="449" fill="#6d28d9">PATCH</text>
+    <rect x="690" y="415" width="152" height="54" rx="12" fill="#fee2e2"/><text x="720" y="449" fill="#b91c1c">DELETE</text>
+  </g>
+  <rect x="880" y="212" width="170" height="170" rx="32" fill="#1e293b" stroke="#475569"/>
+  <path d="M928 296l34 34 58-70" fill="none" stroke="#34d399" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="900" y="425" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="22" font-weight="700">72 TESTS</text>
+  <text x="110" y="538" fill="#64748b" font-family="Arial, sans-serif" font-size="20">JWT • API testing • Docker • GitHub Actions</text>
+</svg>

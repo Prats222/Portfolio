@@ -80,7 +80,7 @@ const Experience = () => {
             <Wrapper>
                 <Title>Experience</Title>
                 <Desc>
-                    Professional experience across AI-driven quality engineering, automation, and full-stack development.
+                    Building enterprise AI automation, ASP.NET Core services, React dashboards, and reliable test frameworks for HP applications.
                 </Desc>
                 <TimelineSection>
                     <Timeline>
@@ -88,7 +88,7 @@ const Experience = () => {
                             <TimelineItem key={experience.id}>
                                 <TimelineSeparator>
                                     <TimelineDot variant="outlined" color="secondary" />
-                                    {index !== experiences.length  && <TimelineConnector style={{ background: '#854CE6' }} />}
+                                    {index !== experiences.length - 1 && <TimelineConnector style={{ background: '#854CE6' }} />}
                                 </TimelineSeparator>
                                 <TimelineContent sx={{ py: '12px', px: 2 }}>
                                     <ExperienceCard experience={experience}/>

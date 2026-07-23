@@ -14,20 +14,20 @@ return (
         <Title>Projects</Title>
         <Desc>Products and engineering work spanning agentic AI, full-stack development, and automation.</Desc>
         <ToggleButtonGroup>
-          {toggle === 'web app' ? (
-            <ToggleButton active value="web app" onClick={() => setToggle('web app')}>
-              PRODUCT PROJECTS
+          {toggle === 'product' ? (
+            <ToggleButton active value="product" onClick={() => setToggle('product')}>
+              AI PLATFORM
             </ToggleButton>
           ) : (
-            <ToggleButton value="web app" onClick={() => setToggle('web app')}>
-              PRODUCT PROJECTS
+            <ToggleButton value="product" onClick={() => setToggle('product')}>
+              AI PLATFORM
             </ToggleButton>
           )}
           <Divider />
-          {toggle === 'android app' ?
-            <ToggleButton active value="android app" onClick={() => setToggle('android app')}>INDUSTRY PROJECTS</ToggleButton>
+          {toggle === 'automation' ?
+            <ToggleButton active value="automation" onClick={() => setToggle('automation')}>AUTOMATION PLATFORM</ToggleButton>
             :
-            <ToggleButton value="android app" onClick={() => setToggle('android app')}>INDUSTRY PROJECTS</ToggleButton>
+            <ToggleButton value="automation" onClick={() => setToggle('automation')}>AUTOMATION PLATFORM</ToggleButton>
           }
         </ToggleButtonGroup>
         <CardContainer>

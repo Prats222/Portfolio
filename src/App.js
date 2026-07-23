@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails';
 import { useState } from 'react';
 import Contact from './components/Contact';
+import Certifications from './components/Certifications';
 import { MdDarkMode } from 'react-icons/md';
 import {HiOutlineLightBulb} from 'react-icons/hi'
 const Body = styled.div `background-color: ${({ theme }) => theme.bg}; width: 100%; overflow-x: hidden; height:100%`
@@ -42,6 +43,7 @@ function App() {
      <Projects openModal={openModal} setOpenModal={setOpenModal}/>
      <Wrapper>
       <Education2 />
+      <Certifications />
       <Contact />
      </Wrapper>
      <Footer  />
