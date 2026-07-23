@@ -10,7 +10,7 @@ export const Bio = {
     "Software Engineer with 1+ years of experience designing, developing, and testing enterprise applications using ASP.NET Core, React, Playwright, Selenium, and modern automation frameworks. I build REST APIs, full-stack products, and AI-powered automation for enterprise HP applications.",
   github: "https://github.com/Prats222",
   resume: "/Prateek_Mishra_Resume.pdf",
-  linkedin: "https://linkedin.com/in/prateek-mishra",
+  linkedin: "https://www.linkedin.com/in/prateek-mishra-686945243/",
   email: "mailto:mprateek058@gmail.com",
 };
 
@@ -101,6 +101,85 @@ export const experiences = [
       "Azure DevOps",
       "AI Automation",
     ],
+  },
+  {
+    id: 1,
+    img: "https://www.google.com/s2/favicons?domain=cognizant.com&sz=128",
+    role: "Programmer Analyst Intern",
+    company: "Cognizant",
+    date: "April 2025 - July 2025",
+    desc:
+      "Completed an on-site enterprise software engineering internship in Bengaluru, working with Java, Selenium-based automation, and application testing practices.",
+    skills: [
+      "Java",
+      "Selenium",
+      "Test Automation",
+      "Software Testing",
+      "Enterprise Applications",
+    ],
+  },
+  {
+    id: 2,
+    img: "https://github.com/Prats222/Java-Practice/assets/126672828/facea5dc-c90e-49c6-996b-d24d5f96acfa",
+    role: "Web Development Intern",
+    company: "GreenDumbells",
+    date: "October 2023",
+    desc:
+      "Contributed remotely to the GreenDumbells website and its e-commerce experience using a modern JavaScript and MongoDB-based web stack.",
+    skills: [
+      "React",
+      "Redux",
+      "Node.js",
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "MongoDB",
+      "E-Commerce",
+    ],
+    Dlink:
+      "https://github.com/Prats222/Java-Practice/assets/126672828/db2188cf-f815-4c52-b08d-b815e8e0edff",
+  },
+  {
+    id: 3,
+    img: "https://iconape.com/wp-content/files/po/253758/png/bharat-electronics-ltd-logo.png",
+    role: "SDE Intern",
+    company: "Bharat Electronics Limited",
+    date: "September 2023",
+    desc:
+      "Worked on a Web-GIS application for military use, contributing to its web interface and geospatial functionality.",
+    skills: [
+      "React",
+      "Redux",
+      "Node.js",
+      "JavaScript",
+      "Bootstrap",
+      "OpenLayers",
+      "MongoDB",
+      "Web GIS",
+    ],
+    Dlink:
+      "https://github.com/Prats222/Java-Practice/assets/126672828/d1bee3c2-6774-4805-9c31-9a489249f4b4",
+  },
+  {
+    id: 4,
+    img: "https://github.com/Prats222/Java-Practice/assets/126672828/54778168-901d-48ac-853f-f7719534bfc4",
+    role: "SDE Intern",
+    company: "L&T Finance",
+    date: "August 2023",
+    desc:
+      "Worked on the LTFS helpdesk frontend, Spring Boot API integration, and database procedures supporting user acceptance testing.",
+    skills: [
+      "AngularJS",
+      "Spring Boot",
+      "Java",
+      "JavaScript",
+      "REST APIs",
+      "SQL",
+      "SQL Workbench",
+      "UAT",
+    ],
+    Dlink:
+      "https://github.com/Prats222/CHAT_WITH_PRATS2/assets/126672828/d8bb7f3a-c834-4f71-b1c7-2e3542a65645",
   },
 ];
 
