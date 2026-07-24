@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useRef } from 'react';
-import emailjs from '@emailjs/browser';
-import { Snackbar } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 
 const Container = styled.div`
 display: flex;
@@ -103,7 +102,7 @@ const ContactInputMessage = styled.textarea`
   }
 `
 
-const ContactButton = styled.input`
+const ContactButton = styled.button`
   width: 100%;
   text-decoration: none;
   text-align: center;
@@ -118,6 +117,11 @@ const ContactButton = styled.input`
   color: ${({ theme }) => theme.text_primary};
   font-size: 18px;
   font-weight: 600;
+  cursor: pointer;
+  &:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
 `
 
 
@@ -125,18 +129,38 @@ const ContactButton = styled.input`
 const Contact = () => {
 
   //hooks
-  const [open, setOpen] = React.useState(false);
+  const [notification, setNotification] = React.useState(null);
+  const [sending, setSending] = React.useState(false);
   const form = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    emailjs.sendForm('service_ag0iqkk', 'template_drd88of', form.current, 'JngQ7DPJLqym3hFh7')
-      .then((result) => {
-        setOpen(true);
-        form.current.reset();
-      }, (error) => {
-        console.log(error.text);
+    setSending(true);
+    setNotification(null);
+    const formData = new FormData(form.current);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.get('from_email'),
+          name: formData.get('from_name'),
+          subject: formData.get('subject'),
+          message: formData.get('message'),
+          website: formData.get('website'),
+        }),
       });
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Message could not be sent.');
+      form.current.reset();
+      setNotification({ severity: 'success', message: result.message });
+    } catch (error) {
+      setNotification({ severity: 'error', message: error.message || 'Message could not be sent.' });
+    } finally {
+      setSending(false);
+    }
   }
 
 
@@ -148,26 +172,26 @@ const Contact = () => {
         <Desc>Let's connect about software engineering, SDET, test automation, or AI engineering opportunities.</Desc>
         <ContactForm ref={form} onSubmit={handleSubmit}>
           <ContactTitle>Email Prateek</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" />
-          <ContactInput placeholder="Your Name" name="from_name" />
-          <ContactInput placeholder="Subject" name="subject" />
-          <ContactInputMessage placeholder="Tell me about the role, project, or opportunity" rows="4" name="message" />
-          <ContactButton type="submit" value="Send" />
+          <ContactInput placeholder="Your Email" name="from_email" type="email" required />
+          <ContactInput placeholder="Your Name" name="from_name" minLength="2" maxLength="100" required />
+          <ContactInput placeholder="Subject" name="subject" maxLength="140" />
+          <ContactInputMessage placeholder="Tell me about the role, project, or opportunity" rows="4" name="message" minLength="10" maxLength="4000" required />
+          <input name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-10000px' }} />
+          <ContactButton type="submit" disabled={sending}>{sending ? 'Sending...' : 'Send'}</ContactButton>
         </ContactForm>
         <Snackbar
-          
-          open={open}
+          open={Boolean(notification)}
           autoHideDuration={6000}
-          onClose={()=>setOpen(false)}
-          message="Email sent successfully!"
-          severity="success"
+          onClose={()=>setNotification(null)}
           style={{
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     transform: 'translateY(-50%)', 
   }}
-        />
+        >
+          {notification ? <Alert severity={notification.severity} onClose={() => setNotification(null)}>{notification.message}</Alert> : undefined}
+        </Snackbar>
       </Wrapper>
     </Container>
   )
