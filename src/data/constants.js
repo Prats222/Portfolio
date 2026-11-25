@@ -1,17 +1,16 @@
 export const Bio = {
   name: "Prateek Mishra",
   roles: [
-    "Software Engineer (SDET)",
-    "ASP.NET Core & React Developer",
-    "Playwright Automation Engineer",
-    "AI-Powered Test Automation Engineer",
+    "Full-Stack .NET & React Engineer",
+    "ASP.NET Core Developer",
+    "Builder of Agentic AI Workflows",
   ],
   description:
-    "Software Engineer with 1+ years of experience designing, developing, and testing enterprise applications using ASP.NET Core, React, Playwright, Selenium, and modern automation frameworks. I build REST APIs, full-stack products, and AI-powered automation for enterprise HP applications.",
+    "I build ASP.NET Core APIs and React applications at Ascendion for HP, from printer fleet dashboards to asynchronous image generation. I also develop agentic AI workflows and cross-platform test automation.",
   github: "https://github.com/Prats222",
   resume: "/Prateek_Mishra_Resume.pdf",
   linkedin: "https://www.linkedin.com/in/prateek-mishra-686945243/",
-  email: "mailto:mprateek058@gmail.com",
+  email: "mailto:prateekjobid@gmail.com",
 };
 
 const icon = (name) =>
@@ -41,9 +40,7 @@ export const skills = [
       { name: "Tailwind CSS", image: icon("tailwindcss") },
       { name: "HTML5", image: icon("html5") },
       { name: "CSS3", image: icon("css3") },
-      { name: "PostgreSQL", image: icon("postgresql") },
       { name: "SQL Server", image: icon("microsoftsqlserver") },
-      { name: "MongoDB", image: icon("mongodb") },
     ],
   },
   {
@@ -85,7 +82,25 @@ export const experiences = [
     company: "Ascendion Engineering Pvt. Ltd. | Client: HP Inc.",
     date: "July 2025 - Present",
     desc:
-      "Enhancing HP's AI-driven QAMA framework for enterprise test generation across 53+ Android modules; contributing ASP.NET Core and React services for automation dashboards across 2+ HP projects; maintaining 350+ Playwright tests for HP PrintOS; and developing reusable Python, Selenium, and Pytest automation for enterprise printer workflows.",
+      "Full-stack development, agentic AI, and web automation for HP.",
+    tracks: [
+      {
+        name: "LTO Hub",
+        detail: "Built React printer management interfaces and tenant-scoped ASP.NET Core APIs with EF Core and SQL Server. Cut printer onboarding to under 1 minute and resolved 14 defects in one release cycle.",
+      },
+      {
+        name: "PrintAI",
+        detail: "Implemented an asynchronous image-generation pipeline that handled about 1,500 jobs a day at peak. Replaced polling with server-sent events, reducing status requests by about 85%.",
+      },
+      {
+        name: "HPX QAMA",
+        detail: "Led a seven-person team and developed 120+ AI agents and 130+ workflows with 100+ context configurations. Built a TestRail-to-GitHub orchestrator and automated printer workflows across 53+ Android modules and 50+ Windows and iOS modules combined.",
+      },
+      {
+        name: "PrintOS",
+        detail: "Wrote 250+ Playwright test scripts in TypeScript to validate printer management workflows in HP PrintOS.",
+      },
+    ],
     skills: [
       "ASP.NET Core",
       "React",
@@ -215,12 +230,11 @@ export const projects = [
     id: 0,
     title: "PratsPilot - Agentic AI Platform",
     description:
-      "A full-stack platform for creating, configuring, and executing AI agents, workflows, and custom tools. Built with Clean Architecture, JWT access and refresh tokens, background jobs, provider abstraction for Groq and OpenRouter, and a Python tool framework. Deployed with Docker for 100+ users.",
+      "An ASP.NET Core and React platform for creating AI agents, attaching document context, and connecting agents and Python tools in a visual editor. Autopilot drafts workflows, human approvals can pause runs, and the Arena compares agents head to head. PratsPilot reached 120+ concurrent users and placed second at Launchpad India.",
     image: "/pratspilot-dashboard.png",
     tags: [
       "ASP.NET Core",
       "React",
-      "PostgreSQL",
       "Entity Framework Core",
       "JWT",
       "Docker",

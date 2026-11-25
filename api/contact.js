@@ -74,6 +74,9 @@ module.exports = async function handler(request, response) {
 
     if (!brevoResponse.ok) {
       console.error('Portfolio contact: Brevo rejected the request.', { status: brevoResponse.status });
+      if (brevoResponse.status === 401 || brevoResponse.status === 403) {
+        return response.status(503).json({ message: 'The email provider did not authorize this request. Please email me directly.' });
+      }
       return response.status(502).json({ message: 'The email provider could not deliver your message.' });
     }
 

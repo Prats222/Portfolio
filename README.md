@@ -18,4 +18,6 @@ CONTACT_RECEIVER_EMAIL=<your inbox>
 Set the variables on the Vercel production environment and redeploy. Use a sender verified in Brevo and set the receiver to the inbox you monitor. The visitor's email is used as Reply-To. The site also provides a direct Gmail address and opens a prefilled email draft when the form cannot confirm a send.
 
 For a failed send, check the Vercel function logs for missing configuration, the upstream status code, or a time-out. Credentials and visitor message text are not logged. A successful request includes a Brevo message ID; confirm actual inbox delivery with a test after deployment.
+
+If Brevo reports a new IP, compare the alert timestamp with the failed Vercel invocation and verify the sending infrastructure before authorizing anything. For reliable IP allowlisting across requests, use verified static outbound IPs. Keep the direct email fallback available while delivery is blocked.
  

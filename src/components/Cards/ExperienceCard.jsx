@@ -127,6 +127,23 @@ const Skills = styled.div`
     margin-top: -10px;
 `
 
+const Tracks = styled.dl`
+    display: grid;
+    gap: 12px;
+    margin: 14px 0;
+    line-height: 1.55;
+
+    dt {
+        font-weight: 650;
+        color: ({ theme }) => theme.text_primary;
+    }
+
+    dd {
+        margin: 2px 0 0;
+        color: ({ theme }) => theme.text_secondary;
+    }
+`
+
 const ItemWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -160,6 +177,16 @@ const ExperienceCard = ({ experience }) => {
                     <Span>{experience?.desc}</Span>
 
                 }
+                {experience?.tracks && (
+                    <Tracks>
+                        {experience.tracks.map(({ name, detail }) => (
+                            <div key={name}>
+                                <dt>{name}</dt>
+                                <dd>{detail}</dd>
+                            </div>
+                        ))}
+                    </Tracks>
+                )}
                 {experience?.skills &&
                     <>
                         <br />

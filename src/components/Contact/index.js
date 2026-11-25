@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRef } from 'react';
 import { Alert, Snackbar } from '@mui/material';
+import { Bio } from '../../data/constants';
 
 const Container = styled.div`
 display: flex;
@@ -131,6 +132,7 @@ const Contact = () => {
   //hooks
   const [notification, setNotification] = React.useState(null);
   const [sending, setSending] = React.useState(false);
+  const [draftLink, setDraftLink] = React.useState('');
   const form = useRef();
 
   const handleSubmit = async (e) => {
@@ -138,10 +140,14 @@ const Contact = () => {
     setSending(true);
     setNotification(null);
     const formData = new FormData(form.current);
+    const subject = formData.get('subject')?.trim() || 'Portfolio inquiry';
+    const body = [formData.get('message'), '', formData.get('from_name'), formData.get('from_email')].join('\n');
+    setDraftLink(Bio.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body));
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
+        signal: AbortSignal.timeout(15000),
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: formData.get('from_email'),
@@ -152,12 +158,16 @@ const Contact = () => {
         }),
       });
 
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || 'Message could not be sent.');
+      const result = await response.json().catch(() => null);
+      if (!response.ok || result?.accepted !== true) throw new Error(result?.message || 'The contact form could not confirm your message.');
       form.current.reset();
+      setDraftLink('');
       setNotification({ severity: 'success', message: result.message });
     } catch (error) {
-      setNotification({ severity: 'error', message: error.message || 'Message could not be sent.' });
+      setNotification({
+        severity: 'error',
+        message: error.name === 'TimeoutError' ? 'The contact request timed out.' : error.message || 'Message could not be sent.',
+      });
     } finally {
       setSending(false);
     }
@@ -169,7 +179,8 @@ const Contact = () => {
     <Container>
       <Wrapper>
         <Title>Contact</Title>
-        <Desc>Let's connect about software engineering, SDET, test automation, or AI engineering opportunities.</Desc>
+        <Desc>Let's connect about full-stack .NET and React or backend .NET roles.</Desc>
+        <Desc><a href={Bio.email}>Email me directly</a></Desc>
         <ContactForm ref={form} onSubmit={handleSubmit}>
           <ContactTitle>Email Prateek</ContactTitle>
           <ContactInput placeholder="Your Email" name="from_email" type="email" required />
@@ -178,9 +189,12 @@ const Contact = () => {
           <ContactInputMessage placeholder="Tell me about the role, project, or opportunity" rows="4" name="message" minLength="10" maxLength="4000" required />
           <input name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-10000px' }} />
           <ContactButton type="submit" disabled={sending}>{sending ? 'Sending...' : 'Send'}</ContactButton>
+          {notification?.severity === 'error' && draftLink && (
+            <Desc role="status">{notification.message} <a href={draftLink}>Open your message in your email app</a>.</Desc>
+          )}
         </ContactForm>
         <Snackbar
-          open={Boolean(notification)}
+          open={notification?.severity === 'success'}
           autoHideDuration={6000}
           onClose={()=>setNotification(null)}
           style={{
