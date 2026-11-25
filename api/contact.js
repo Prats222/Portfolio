@@ -1,6 +1,7 @@
 const rateLimit = new Map();
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 5;
+const DEFAULT_FORMSPREE_FORM_ID = 'xnpdwzwd';
 
 module.exports = async function handler(request, response) {
   if (request.method !== 'POST') {
@@ -13,16 +14,20 @@ module.exports = async function handler(request, response) {
   const email = clean(body?.email, 254);
   const subject = clean(body?.subject, 140) || 'Portfolio contact';
   const message = clean(body?.message, 4000);
-  const website = clean(body?.website, 200);
 
-  if (website) {
+  if (clean(body?.website, 200)) {
     return response.status(400).json({ message: 'The form could not accept your message.' });
   }
-
-  if (name.length < 2 || !isEmail(email) || message.length < 10) {
+  if (name.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || message.length < 10) {
     return response.status(400).json({
       message: 'Enter a valid name and email, plus a message of at least 10 characters.',
     });
+  }
+
+  const formId = process.env.FORMSPREE_FORM_ID?.trim() || DEFAULT_FORMSPREE_FORM_ID;
+  if (!/^[a-z0-9]{6,32}$/i.test(formId)) {
+    console.error('Portfolio contact: invalid Formspree form ID.');
+    return response.status(503).json({ message: 'The contact service is temporarily unavailable.' });
   }
 
   const ip = String(request.headers['x-forwarded-for'] || request.socket?.remoteAddress || 'unknown')
@@ -32,83 +37,13 @@ module.exports = async function handler(request, response) {
     return response.status(429).json({ message: 'Too many messages. Please wait a few minutes and try again.' });
   }
 
-  const formspreeId = process.env.FORMSPREE_FORM_ID?.trim();
-  if (formspreeId) {
-    if (!/^[a-z0-9]{6,32}$/i.test(formspreeId)) {
-      console.error('Portfolio contact: invalid Formspree form ID.');
-      return response.status(503).json({ message: 'The contact service is temporarily unavailable.' });
-    }
-    return sendWithFormspree(formspreeId, { name, email, subject, message }, response);
-  }
-
-  const apiKey = process.env.BREVO_API_KEY?.trim();
-  const senderEmail = process.env.BREVO_SENDER_EMAIL?.trim();
-  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL?.trim();
-  if (!apiKey || !senderEmail || !receiverEmail || !isEmail(senderEmail) || !isEmail(receiverEmail)) {
-    console.error('Portfolio contact: Brevo configuration is missing or invalid.');
-    return response.status(503).json({ message: 'The contact service is temporarily unavailable.' });
-  }
-
-  const safeName = escapeHtml(name);
-  const safeEmail = escapeHtml(email);
-  const safeSubject = escapeHtml(subject);
-  const safeMessage = escapeHtml(message).replace(/\n/g, '<br>');
-
-  try {
-    const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      signal: AbortSignal.timeout(9000),
-      headers: {
-        'api-key': apiKey,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        sender: {
-          name: process.env.BREVO_SENDER_NAME || 'Prateek Mishra Portfolio',
-          email: senderEmail,
-        },
-        to: [{ email: receiverEmail, name: 'Prateek Mishra' }],
-        replyTo: { email, name },
-        subject: `[Portfolio] ${subject}`,
-        htmlContent: `
-          <div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#182033">
-            <h2 style="margin-bottom:20px">New portfolio message</h2>
-            <p><strong>From:</strong> ${safeName} &lt;${safeEmail}&gt;</p>
-            <p><strong>Subject:</strong> ${safeSubject}</p>
-            <div style="margin-top:20px;padding:18px;border:1px solid #d9dfeb;border-radius:8px;line-height:1.6">${safeMessage}</div>
-          </div>`,
-        textContent: `From: ${name} <${email}>\nSubject: ${subject}\n\n${message}`,
-      }),
-    });
-
-    if (!brevoResponse.ok) {
-      console.error('Portfolio contact: Brevo rejected the request.', { status: brevoResponse.status });
-      if (brevoResponse.status === 401 || brevoResponse.status === 403) {
-        return response.status(503).json({ message: 'The email provider did not authorize this request. Please email me directly.' });
-      }
-      return response.status(502).json({ message: 'The email provider could not deliver your message.' });
-    }
-
-    const receipt = await brevoResponse.json().catch(() => null);
-    if (!receipt?.messageId) {
-      console.error('Portfolio contact: Brevo returned no message ID.');
-      return response.status(502).json({ message: 'The email provider did not confirm receipt.' });
-    }
-    return response.status(200).json({ accepted: true, message: 'Thanks, your message was sent.' });
-  } catch (error) {
-    console.error('Portfolio contact: Brevo connection failed.', { type: error.name });
-    return response.status(502).json({ message: 'The contact service could not confirm your message.' });
-  }
-};
-
-async function sendWithFormspree(formId, fields, response) {
   try {
     const upstream = await fetch('https://formspree.io/f/' + formId, {
       method: 'POST',
       redirect: 'error',
       signal: AbortSignal.timeout(9000),
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify(fields),
+      body: JSON.stringify({ name, email, subject, message }),
     });
     const result = await upstream.json().catch(() => null);
     if (upstream.ok && result?.ok === true) {
@@ -119,7 +54,7 @@ async function sendWithFormspree(formId, fields, response) {
     console.error('Portfolio contact: Formspree connection failed.', { type: error.name });
   }
   return response.status(502).json({ message: 'The contact service could not confirm your message.' });
-}
+};
 
 function isRateLimited(ip) {
   const now = Date.now();
@@ -130,11 +65,10 @@ function isRateLimited(ip) {
     if (rateLimit.size >= 2048 && !rateLimit.has(ip)) return true;
   }
   const current = rateLimit.get(ip);
-  if (!current || now - current.startedAt > WINDOW_MS) {
+  if (!current || now - current.startedAt >= WINDOW_MS) {
     rateLimit.set(ip, { count: 1, startedAt: now });
     return false;
   }
-
   current.count += 1;
   return current.count > MAX_REQUESTS;
 }
@@ -143,23 +77,10 @@ function clean(value, maximumLength) {
   return typeof value === 'string' ? value.trim().slice(0, maximumLength) : '';
 }
 
-function isEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
 function safeJsonParse(value) {
   try {
     return JSON.parse(value);
   } catch {
     return {};
   }
-}
-
-function escapeHtml(value) {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
 }

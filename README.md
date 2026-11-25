@@ -2,30 +2,10 @@
 
 Live at https://portfolio-prateek.vercel.app/
 
-## Contact Email
+## Contact
 
-To use Formspree, create a form with a verified recipient, then set
-`FORMSPREE_FORM_ID` in Vercel Production to the ID from
-`https://formspree.io/f/<id>` and redeploy. Verify a submission in the Formspree
-dashboard and the recipient inbox. A configured Formspree form handles delivery
-directly through its notification settings.
+The contact form submits to the Vercel function at /api/contact. The function validates input, checks a honeypot, applies a per-instance rate limit, and forwards accepted requests to Formspree. Configure the inbox in the Formspree dashboard.
 
-### Existing Brevo configuration
+The public form ID is set in api/contact.js. To use a separate form for a deployment, set FORMSPREE_FORM_ID to the ID from https://formspree.io/f/<id>, then redeploy.
 
-The contact form posts to the Vercel serverless function at `/api/contact`. The function validates input, uses a honeypot and basic rate limit, and sends the message through Brevo without exposing credentials to the browser.
-
-Configure these Vercel environment variables:
-
-```text
-BREVO_API_KEY=<portfolio-specific Brevo API key>
-BREVO_SENDER_EMAIL=<verified Brevo sender>
-BREVO_SENDER_NAME=Prateek Mishra Portfolio
-CONTACT_RECEIVER_EMAIL=<your inbox>
-```
-
-Set the variables on the Vercel production environment and redeploy. Use a sender verified in Brevo and set the receiver to the inbox you monitor. The visitor's email is used as Reply-To. The site also provides a direct Gmail address and opens a prefilled email draft when the form cannot confirm a send.
-
-For a failed send, check the Vercel function logs for missing configuration, the upstream status code, or a time-out. Credentials and visitor message text are not logged. A successful request includes a Brevo message ID; confirm actual inbox delivery with a test after deployment.
-
-If Brevo reports a new IP, compare the alert timestamp with the failed Vercel invocation and verify the sending infrastructure before authorizing anything. For reliable IP allowlisting across requests, use verified static outbound IPs. Keep the direct email fallback available while delivery is blocked.
- 
+When a send fails, visitors can keep their message and open a prefilled email draft. For delivery issues, check the Vercel function status, the Formspree submissions dashboard, and the recipient inbox.
