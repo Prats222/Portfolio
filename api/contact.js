@@ -25,19 +25,28 @@ module.exports = async function handler(request, response) {
     });
   }
 
+  const ip = String(request.headers['x-forwarded-for'] || request.socket?.remoteAddress || 'unknown')
+    .split(',')[0]
+    .trim();
+  if (isRateLimited(ip)) {
+    return response.status(429).json({ message: 'Too many messages. Please wait a few minutes and try again.' });
+  }
+
+  const formspreeId = process.env.FORMSPREE_FORM_ID?.trim();
+  if (formspreeId) {
+    if (!/^[a-z0-9]{6,32}$/i.test(formspreeId)) {
+      console.error('Portfolio contact: invalid Formspree form ID.');
+      return response.status(503).json({ message: 'The contact service is temporarily unavailable.' });
+    }
+    return sendWithFormspree(formspreeId, { name, email, subject, message }, response);
+  }
+
   const apiKey = process.env.BREVO_API_KEY?.trim();
   const senderEmail = process.env.BREVO_SENDER_EMAIL?.trim();
   const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL?.trim();
   if (!apiKey || !senderEmail || !receiverEmail || !isEmail(senderEmail) || !isEmail(receiverEmail)) {
     console.error('Portfolio contact: Brevo configuration is missing or invalid.');
     return response.status(503).json({ message: 'The contact service is temporarily unavailable.' });
-  }
-
-  const ip = String(request.headers['x-forwarded-for'] || request.socket?.remoteAddress || 'unknown')
-    .split(',')[0]
-    .trim();
-  if (isRateLimited(ip)) {
-    return response.status(429).json({ message: 'Too many messages. Please wait a few minutes and try again.' });
   }
 
   const safeName = escapeHtml(name);
@@ -91,6 +100,26 @@ module.exports = async function handler(request, response) {
     return response.status(502).json({ message: 'The contact service could not confirm your message.' });
   }
 };
+
+async function sendWithFormspree(formId, fields, response) {
+  try {
+    const upstream = await fetch('https://formspree.io/f/' + formId, {
+      method: 'POST',
+      redirect: 'error',
+      signal: AbortSignal.timeout(9000),
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(fields),
+    });
+    const result = await upstream.json().catch(() => null);
+    if (upstream.ok && result?.ok === true) {
+      return response.status(200).json({ accepted: true, message: 'Thanks, your message was sent.' });
+    }
+    console.error('Portfolio contact: Formspree did not accept the message.', { status: upstream.status });
+  } catch (error) {
+    console.error('Portfolio contact: Formspree connection failed.', { type: error.name });
+  }
+  return response.status(502).json({ message: 'The contact service could not confirm your message.' });
+}
 
 function isRateLimited(ip) {
   const now = Date.now();

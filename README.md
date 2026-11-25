@@ -4,6 +4,14 @@ Live at https://portfolio-prateek.vercel.app/
 
 ## Contact Email
 
+To use Formspree, create a form with a verified recipient, then set
+`FORMSPREE_FORM_ID` in Vercel Production to the ID from
+`https://formspree.io/f/<id>` and redeploy. Verify a submission in the Formspree
+dashboard and the recipient inbox. A configured Formspree form handles delivery
+directly through its notification settings.
+
+### Existing Brevo configuration
+
 The contact form posts to the Vercel serverless function at `/api/contact`. The function validates input, uses a honeypot and basic rate limit, and sends the message through Brevo without exposing credentials to the browser.
 
 Configure these Vercel environment variables:
