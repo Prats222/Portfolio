@@ -8,13 +8,6 @@ module.exports = async function handler(request, response) {
     return response.status(405).json({ message: 'Method not allowed.' });
   }
 
-  const ip = String(request.headers['x-forwarded-for'] || request.socket?.remoteAddress || 'unknown')
-    .split(',')[0]
-    .trim();
-  if (isRateLimited(ip)) {
-    return response.status(429).json({ message: 'Too many messages. Please wait a few minutes and try again.' });
-  }
-
   const body = typeof request.body === 'string' ? safeJsonParse(request.body) : request.body;
   const name = clean(body?.name, 100);
   const email = clean(body?.email, 254);
@@ -23,7 +16,7 @@ module.exports = async function handler(request, response) {
   const website = clean(body?.website, 200);
 
   if (website) {
-    return response.status(200).json({ message: 'Message sent.' });
+    return response.status(400).json({ message: 'The form could not accept your message.' });
   }
 
   if (name.length < 2 || !isEmail(email) || message.length < 10) {
@@ -32,11 +25,19 @@ module.exports = async function handler(request, response) {
     });
   }
 
-  const apiKey = process.env.BREVO_API_KEY;
-  const senderEmail = process.env.BREVO_SENDER_EMAIL;
-  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL;
-  if (!apiKey || !senderEmail || !receiverEmail) {
+  const apiKey = process.env.BREVO_API_KEY?.trim();
+  const senderEmail = process.env.BREVO_SENDER_EMAIL?.trim();
+  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL?.trim();
+  if (!apiKey || !senderEmail || !receiverEmail || !isEmail(senderEmail) || !isEmail(receiverEmail)) {
+    console.error('Portfolio contact: Brevo configuration is missing or invalid.');
     return response.status(503).json({ message: 'The contact service is temporarily unavailable.' });
+  }
+
+  const ip = String(request.headers['x-forwarded-for'] || request.socket?.remoteAddress || 'unknown')
+    .split(',')[0]
+    .trim();
+  if (isRateLimited(ip)) {
+    return response.status(429).json({ message: 'Too many messages. Please wait a few minutes and try again.' });
   }
 
   const safeName = escapeHtml(name);
@@ -47,6 +48,7 @@ module.exports = async function handler(request, response) {
   try {
     const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
+      signal: AbortSignal.timeout(9000),
       headers: {
         'api-key': apiKey,
         'Content-Type': 'application/json',
@@ -71,17 +73,30 @@ module.exports = async function handler(request, response) {
     });
 
     if (!brevoResponse.ok) {
+      console.error('Portfolio contact: Brevo rejected the request.', { status: brevoResponse.status });
       return response.status(502).json({ message: 'The email provider could not deliver your message.' });
     }
 
-    return response.status(200).json({ message: 'Message sent. I will get back to you soon.' });
-  } catch {
-    return response.status(502).json({ message: 'The contact service could not send your message.' });
+    const receipt = await brevoResponse.json().catch(() => null);
+    if (!receipt?.messageId) {
+      console.error('Portfolio contact: Brevo returned no message ID.');
+      return response.status(502).json({ message: 'The email provider did not confirm receipt.' });
+    }
+    return response.status(200).json({ accepted: true, message: 'Thanks, your message was sent.' });
+  } catch (error) {
+    console.error('Portfolio contact: Brevo connection failed.', { type: error.name });
+    return response.status(502).json({ message: 'The contact service could not confirm your message.' });
   }
 };
 
 function isRateLimited(ip) {
   const now = Date.now();
+  if (rateLimit.size >= 2048) {
+    for (const [key, entry] of rateLimit) {
+      if (now - entry.startedAt >= WINDOW_MS) rateLimit.delete(key);
+    }
+    if (rateLimit.size >= 2048 && !rateLimit.has(ip)) return true;
+  }
   const current = rateLimit.get(ip);
   if (!current || now - current.startedAt > WINDOW_MS) {
     rateLimit.set(ip, { count: 1, startedAt: now });
