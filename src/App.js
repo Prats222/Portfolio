@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import Contact from './components/Contact';
 import DepthStage from './components/DepthStage';
-import PortraitField from './components/PortraitField';
+import PortraitShowcase from './components/PortraitShowcase';
 import WorkScene from './components/WorkScene';
 import { Bio, experiences, projects, certifications } from './data/constants';
 import './App.css';
@@ -111,25 +111,21 @@ export default function App() {
         </div>
       </header>
       <main id="main">
-        <section className="shell hero" aria-labelledby="hero-title">
+        <section className="hero-band" aria-labelledby="hero-title">
+          <div className="shell hero">
           <div className="hero-copy">
-            <p className="label">Software engineer · Bengaluru</p>
+            <p className="hero-availability"><span aria-hidden="true" /> Open to full-stack .NET roles</p>
+            <p className="hero-greeting">Hey, I’m</p>
             <h1 id="hero-title">Prateek<br /> Mishra<span>.</span></h1>
-            <h2>Full-stack .NET &amp; React engineer</h2>
+            <h2>Full-stack <em>.NET &amp; React</em> engineer</h2>
             <p className="intro">I build printer management apps and asynchronous services for HP at Ascendion. I also built PratsPilot, a platform for creating and running AI workflows.</p>
-            <div className="actions"><a className="button primary" href="#experience">Explore my work</a><a className="button" href={Bio.resume} download>Download résumé</a></div>
+            <ul className="hero-stack" aria-label="Core technologies">
+              {['C#', 'ASP.NET Core', 'React', 'TypeScript', 'Agentic AI'].map(item => <li key={item}>{item}</li>)}
+            </ul>
+            <div className="actions"><a className="button primary" href="#experience">Explore my work</a><a className="button" href="#contact">Let’s talk</a></div>
           </div>
-          <figure className="hero-portrait">
-            <DepthStage className="portrait-scene">
-              <div className="depth-entry portrait-entry">
-                <div className="depth-rig portrait-rig">
-                  <PortraitField />
-                  <div className="portrait-depth"><img src="/HeroImage.jpg" alt="Prateek Mishra wearing a headset" /></div>
-                </div>
-              </div>
-            </DepthStage>
-            <figcaption><span>Associate Engineer at Ascendion</span><span>Open to .NET roles</span></figcaption>
-          </figure>
+          <PortraitShowcase />
+          </div>
         </section>
         <section className="work-band" id="experience">
           <div className="shell work-heading">
