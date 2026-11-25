@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import Contact from './components/Contact';
 import DepthStage from './components/DepthStage';
+import PortraitField from './components/PortraitField';
 import WorkScene from './components/WorkScene';
 import { Bio, experiences, projects, certifications } from './data/constants';
 import './App.css';
@@ -100,7 +101,13 @@ export default function App() {
         <div className="shell nav">
           <a className="wordmark" href="#main">Prateek<span>.</span></a>
           <nav aria-label="Main navigation"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a></nav>
-          <div className="nav-utilities"><ThemeToggle /><a className="button small" href={Bio.resume} download>Résumé PDF</a></div>
+          <div className="nav-utilities">
+            <div className="nav-social" role="group" aria-label="Social profiles">
+              <a href={Bio.github} aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.08c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.64-1.25-1.64-1.03-.71.08-.7.08-.7 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.29.94.1-.73.39-1.23.72-1.52-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.09 1.16a10.7 10.7 0 0 1 5.63 0c2.15-1.46 3.09-1.16 3.09-1.16.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.27-5.15 5.55.41.35.77 1.03.77 2.08v3.09c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg><span>GitHub</span></a>
+              <a href={Bio.linkedin} aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.4 8.4a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM3.8 10h3.3v10.5H3.8Zm5.8 0h3.2v1.4h.1a3.5 3.5 0 0 1 3.1-1.7c3.3 0 3.9 2.2 3.9 5v5.8h-3.3v-5.1c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.7v5.1H9.6Z"/></svg><span>LinkedIn</span></a>
+            </div>
+            <ThemeToggle /><a className="button small" href={Bio.resume} download>Résumé PDF</a>
+          </div>
         </div>
       </header>
       <main id="main">
@@ -116,11 +123,8 @@ export default function App() {
             <DepthStage className="portrait-scene">
               <div className="depth-entry portrait-entry">
                 <div className="depth-rig portrait-rig">
-                  <div className="portrait-mat" aria-hidden="true" />
-                  <div className="portrait-depth"><img src="/HeroImage.jpg" alt="Prateek Mishra at his workstation" /></div>
-                  <div className="portrait-orbit orbit-one" aria-hidden="true" />
-                  <div className="portrait-orbit orbit-two" aria-hidden="true" />
-                  <span className="portrait-caption">Bengaluru, India</span>
+                  <PortraitField />
+                  <div className="portrait-depth"><img src="/HeroImage.jpg" alt="Prateek Mishra wearing a headset" /></div>
                 </div>
               </div>
             </DepthStage>
