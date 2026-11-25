@@ -1,147 +1,116 @@
-import { useEffect, useState } from 'react';
-import Typewriter from 'typewriter-effect';
+import { useRef, useState } from 'react';
 import Contact from './components/Contact';
-import OrbitalScene from './components/OrbitalScene';
-import portrait from './images/HeroImage2.jpg';
+import WorkScene from './components/WorkScene';
 import { Bio, experiences, projects, certifications } from './data/constants';
 import './App.css';
 
-const trackLabels = ['Full-stack development', 'Backend development', 'Agentic AI', 'Web automation'];
-const skillGroups = [
-  ['Backend', 'C#, ASP.NET Core, REST APIs, EF Core, SQL Server, JWT'],
-  ['Frontend', 'React, TypeScript, JavaScript, Material UI, Tailwind CSS'],
-  ['Automation', 'Playwright, Selenium WebDriver, pytest, Postman'],
-  ['Delivery', 'Git, GitHub Actions, Azure DevOps, Docker, CI/CD'],
+const focus = [
+  { label: 'Full-stack development', metric: 'Under 1 min', context: 'Printer onboarding' },
+  { label: 'Backend development', metric: '~1,500', context: 'Jobs per day at peak' },
+  { label: 'Agentic AI', metric: '130+', context: 'Automated workflows' },
+  { label: 'Web automation', metric: '250+', context: 'Playwright test scripts' },
 ];
-const projectFeatures = [
-  { title: 'Configure agents', copy: 'Choose a model per agent, attach documents as context, and connect built-in tools or custom Python scripts.' },
-  { title: 'Run workflows', copy: 'Chain agents and tools in a visual editor, draft flows with Autopilot, and pause runs at human approval gates.' },
-  { title: 'Compare outputs', copy: 'Put agents head to head in the Arena and inspect scores, step outputs, logs, latency, and estimated cost.' },
+const features = [
+  ['Configure agents', 'Choose a model, attach documents as context, and connect built-in tools or your own Python scripts.'],
+  ['Run workflows', 'Chain agents and tools visually, draft a flow with Autopilot, and pause it at a human approval gate.'],
+  ['Compare outputs', 'Run agents head to head in the Arena and inspect scores, step outputs, logs, latency, and estimated cost.'],
 ];
 
-function ProjectFeatures() {
+function FeaturedProject() {
   const [active, setActive] = useState(0);
+  const [project, automation] = projects;
   return (
-    <div className="feature-console">
-      <div className="feature-options" role="group" aria-label="Explore PratsPilot features">
-        {projectFeatures.map(({ title }, i) => (
-          <button type="button" key={title} aria-pressed={active === i} onClick={() => setActive(i)}>{title}</button>
-        ))}
+    <section id="projects" className="shell project-section">
+      <div className="project-head">
+        <div><p className="label">Featured project</p><h2>PratsPilot<span>.</span></h2></div>
+        <p className="award">2nd place <span>Launchpad India</span></p>
       </div>
-      <p aria-live="polite">{projectFeatures[active].copy}</p>
-    </div>
-  );
-}
-
-function AnimatedRole() {
-  const [reduceMotion, setReduceMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const change = (event) => setReduceMotion(event.matches);
-    query.addEventListener('change', change);
-    return () => query.removeEventListener('change', change);
-  }, []);
-  return (
-    <div className="animated-role">
-      <span className="sr-only">Full-stack .NET and React engineer</span>
-      <span aria-hidden="true">{reduceMotion ? '.NET & React engineer' : (
-        <Typewriter options={{ strings: ['.NET & React engineer', 'Backend developer', 'Agentic AI builder'], autoStart: true, loop: true, delay: 54, deleteSpeed: 25 }} />
-      )}</span>
-    </div>
+      <div className="project-layout">
+        <a className="project-visual" href={project.webapp} aria-label="Open the PratsPilot live demo">
+          <img src={project.image} alt="PratsPilot dashboard with agents, workflows, tools, and run controls" loading="lazy" />
+        </a>
+        <div className="project-info">
+          <p className="label">ASP.NET Core / React</p>
+          <h3>An agentic AI workflow platform.</h3>
+          <div className="feature-options" role="group" aria-label="Explore PratsPilot features">
+            {features.map(([title], i) => <button key={title} type="button" aria-pressed={i === active} onClick={() => setActive(i)}>{title}</button>)}
+          </div>
+          <p className="feature-copy" aria-live="polite">{features[active][1]}</p>
+          <p className="project-proof"><strong>120+</strong> concurrent users</p>
+          <div className="actions"><a className="button primary" href={project.webapp}>Live demo</a><a className="button" href={project.github}>Source code</a></div>
+        </div>
+      </div>
+      <div className="secondary-project"><div><h3>Automation PM</h3><p>A practice platform for API and UI automation with .NET, React, and Playwright.</p></div><a href={automation.github}>Source code</a></div>
+    </section>
   );
 }
 
 export default function App() {
-  const current = experiences[0];
-  const [pratsPilot, automation] = projects;
+  const journey = useRef(null);
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header">
+        <div className="scroll-progress" aria-hidden="true" />
         <div className="shell nav">
-          <a className="wordmark" href="#main" aria-label="Prateek Mishra home"><span>PM</span> Prateek Mishra</a>
+          <a className="wordmark" href="#main">Prateek<span>.</span></a>
           <nav aria-label="Main navigation"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a></nav>
           <a className="button small" href={Bio.resume} download>Résumé PDF</a>
         </div>
       </header>
       <main id="main">
-        <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-grid shell">
-            <div className="hero-copy">
-              <p className="kicker"><span className="available-dot" /> Open to full-stack and backend roles</p>
-              <h1 id="hero-title">Prateek<br className="desktop-break" /> Mishra<span>.</span></h1>
-              <AnimatedRole />
-              <p className="intro">{Bio.description}</p>
-              <div className="actions">
-                <a className="button primary" href="#experience">Explore my work</a>
-                <a className="button" href={Bio.resume} download>Download résumé</a>
-              </div>
-              <p className="hero-meta">Bengaluru, India <span aria-hidden="true">·</span> Associate Engineer at Ascendion</p>
-            </div>
-            <div className="hero-art">
-              <OrbitalScene />
-              <figure className="portrait-stage">
-                <div className="portrait-frame"><img src={portrait} alt="Prateek Mishra at his workstation" /></div>
-                <figcaption><strong>Prateek Mishra</strong><span>C# · ASP.NET Core · React</span></figcaption>
-              </figure>
-            </div>
+        <section className="shell hero" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <p className="label">Software engineer · Bengaluru</p>
+            <h1 id="hero-title">Prateek<br /> Mishra<span>.</span></h1>
+            <h2>Full-stack .NET &amp; React engineer</h2>
+            <p className="intro">I build printer management apps and asynchronous services for HP at Ascendion. I also built PratsPilot, a platform for creating and running AI workflows.</p>
+            <div className="actions"><a className="button primary" href="#experience">Explore my work</a><a className="button" href={Bio.resume} download>Download résumé</a></div>
           </div>
+          <figure className="hero-portrait">
+            <div className="portrait-mat">
+              <div className="portrait-depth"><img src="/HeroImage.jpg" alt="Prateek Mishra at his workstation" /></div>
+              <svg className="portrait-orbit" viewBox="0 0 500 450" aria-hidden="true"><ellipse cx="250" cy="222" rx="230" ry="113" transform="rotate(-42 250 222)" /><ellipse cx="250" cy="222" rx="222" ry="124" transform="rotate(25 250 222)" /></svg>
+            </div>
+            <figcaption><span>Associate Engineer at Ascendion</span><span>Open to .NET roles</span></figcaption>
+          </figure>
         </section>
-        <div className="shell proof-rail" aria-label="Selected engineering outcomes">
-          <div><strong>1,500</strong><span>PrintAI jobs per day at peak</span></div>
-          <div><strong>85%</strong><span>Fewer status requests with live updates</span></div>
-          <div><strong>250+</strong><span>PrintOS Playwright scripts</span></div>
-        </div>
-
-        <section className="section shell" id="experience">
-          <div className="section-heading">
-            <div><p className="eyebrow">Professional experience</p><h2>Building for HP.</h2></div>
-            <p className="section-sub">Ascendion <span aria-hidden="true">·</span> July 2025–present</p>
+        <section className="work-band" id="experience">
+          <div className="shell work-heading">
+            <p className="label">Ascendion · Client: HP</p>
+            <h2>Behind the work<span>.</span></h2>
+            <p>Full-stack development, background services, agentic AI, and web automation. <span>July 2025–present.</span></p>
           </div>
-          <div className="experience-grid">
-            <aside className="experience-lead">
-              <h3>Associate Engineer</h3>
-              <p>Full-stack product development, agentic AI, and cross-platform automation for HP.</p>
-              <a href={Bio.resume} download>See résumé</a>
-            </aside>
-            <div className="track-list">
-              {current.tracks.map(({ name, detail }, i) => (
-                <details key={name} open={i === 0 ? true : undefined}>
-                  <summary><span><strong>{name}</strong><small>{trackLabels[i]}</small></span><span className="toggle-mark" aria-hidden="true" /></summary>
+          <div className="shell journey" ref={journey}>
+            <WorkScene journey={journey} />
+            <div className="work-chapters">
+              {experiences[0].tracks.map(({ name, detail }, i) => (
+                <article className="work-chapter" key={name} data-chapter>
+                  <p className="label">{focus[i].label}</p>
+                  <h3>{name}</h3>
                   <p>{detail}</p>
-                </details>
+                  <div className="work-proof"><strong>{focus[i].metric}</strong><span>{focus[i].context}</span></div>
+                </article>
               ))}
             </div>
           </div>
-          <details className="earlier"><summary>Earlier experience</summary><ul>{experiences.slice(1).map(({ id, company, role, date }) => <li key={id}><strong>{company}</strong> · {role} · {date}</li>)}</ul></details>
+          <details className="shell earlier"><summary>Earlier experience</summary><ul>{experiences.slice(1).map(({ id, company, role, date }) => <li key={id}><strong>{company}</strong> · {role} · {date}</li>)}</ul></details>
         </section>
-
-        <section className="section shell" id="projects">
-          <div className="section-heading"><div><p className="eyebrow">Featured project</p><h2>PratsPilot.</h2></div><p className="section-sub">2nd place at Launchpad India</p></div>
-          <div className="project-panel">
-            <div className="project-chrome"><span className="project-signal" aria-hidden="true" /><strong>PratsPilot workspace</strong><span>ASP.NET Core / React</span></div>
-            <a className="project-image" href={pratsPilot.webapp} aria-label="Open the PratsPilot demo">
-              <img src={pratsPilot.image} alt="PratsPilot's agent and workflow dashboard" loading="lazy" />
-            </a>
-            <div className="project-description">
-              <div>
-                <h3>An agentic AI workflow platform</h3>
-                <ProjectFeatures />
-                <div className="actions"><a className="button primary" href={pratsPilot.webapp}>Live demo</a><a className="button" href={pratsPilot.github}>Source code</a></div>
-              </div>
-              <div className="project-metric"><strong>120+</strong><span>concurrent users</span></div>
+        <FeaturedProject />
+        <section id="skills" className="skills-band">
+          <div className="shell skills-layout">
+            <div><p className="label">Skills</p><h2>My toolkit<span>.</span></h2></div>
+            <dl>
+              <div><dt>Backend</dt><dd>C#, ASP.NET Core, REST APIs, EF Core, SQL Server, JWT</dd></div>
+              <div><dt>Frontend</dt><dd>React, TypeScript, JavaScript, Material UI, Tailwind CSS</dd></div>
+              <div><dt>Automation</dt><dd>Playwright, Selenium WebDriver, pytest, Postman</dd></div>
+              <div><dt>Delivery</dt><dd>Git, GitHub Actions, Azure DevOps, Docker, CI/CD</dd></div>
+            </dl>
+            <div className="credentials">
+              <div><h3>Education</h3><p>B.Tech in Information Technology, VIT Vellore · 2025 · 8.53/10</p></div>
+              <div><h3>Recognition</h3><p>Rising Star Award · Pillar of Strength · Exceeds Expectations</p></div>
+              <details><summary>Certifications</summary><ul>{certifications.map(item => <li key={item}>{item}</li>)}</ul></details>
             </div>
-          </div>
-          <div className="secondary-project"><div><h3>Automation PM</h3><p>ASP.NET Core, React, and Playwright platform for practicing API and UI automation.</p></div><a href={automation.github}>Source code</a></div>
-        </section>
-
-        <section className="section shell" id="skills">
-          <div className="section-heading"><div><p className="eyebrow">Technical skills</p><h2>What I work with.</h2></div></div>
-          <dl className="skill-grid">{skillGroups.map(([name, values]) => <div key={name}><dt>{name}</dt><dd>{values}</dd></div>)}</dl>
-          <div className="credentials">
-            <div><h3>Education</h3><p>B.Tech in Information Technology, VIT Vellore · 2025 · 8.53/10</p></div>
-            <div><h3>Recognition</h3><p>Rising Star Award · Pillar of Strength · Exceeds Expectations</p></div>
-            <details className="earlier"><summary>Certifications</summary><ul>{certifications.map(item => <li key={item}>{item}</li>)}</ul></details>
           </div>
         </section>
         <Contact />

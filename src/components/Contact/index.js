@@ -41,7 +41,7 @@ export default function Contact() {
   return (
     <section className="section shell contact" id="contact">
       <div className="contact-copy">
-        <p className="eyebrow">Contact</p>
+        <p className="label">Contact</p>
         <h2>Let's talk.</h2>
         <p>I'm open to full-stack .NET and React roles and backend .NET opportunities.</p>
         <a href={Bio.email}>{Bio.email.slice('mailto:'.length)}</a>
