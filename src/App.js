@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import Contact from './components/Contact';
+import DepthStage from './components/DepthStage';
 import WorkScene from './components/WorkScene';
 import { Bio, experiences, projects, certifications } from './data/constants';
 import './App.css';
@@ -15,6 +16,42 @@ const features = [
   ['Run workflows', 'Chain agents and tools visually, draft a flow with Autopilot, and pause it at a human approval gate.'],
   ['Compare outputs', 'Run agents head to head in the Arena and inspect scores, step outputs, logs, latency, and estimated cost.'],
 ];
+const toolkit = [
+  ['Backend', 'C#, ASP.NET Core, REST APIs, EF Core, SQL Server, JWT', 'APIs'],
+  ['Frontend', 'React, TypeScript, JavaScript, Material UI, Tailwind CSS', 'UI'],
+  ['Automation', 'Playwright, Selenium WebDriver, pytest, Postman', 'QA'],
+  ['Delivery', 'Git, GitHub Actions, Azure DevOps, Docker, CI/CD', 'CI'],
+];
+
+function initialTheme() {
+  try {
+    const saved = localStorage.getItem('portfolio-theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch { /* Fall back to the system theme when storage is unavailable. */ }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState(initialTheme);
+  const dark = theme === 'dark';
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  function toggle() {
+    const next = dark ? 'light' : 'dark';
+    setTheme(next);
+    try { localStorage.setItem('portfolio-theme', next); } catch { /* The toggle still works for this visit. */ }
+  }
+
+  return (
+    <button className="theme-toggle" type="button" aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} onClick={toggle}>
+      {dark ? <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2" /></svg> :
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15A8.5 8.5 0 0 1 9 3.8 8.5 8.5 0 1 0 20.2 15Z" /></svg>}
+      <span>{dark ? 'Light' : 'Dark'}</span>
+    </button>
+  );
+}
 
 function FeaturedProject() {
   const [active, setActive] = useState(0);
@@ -26,9 +63,17 @@ function FeaturedProject() {
         <p className="award">2nd place <span>Launchpad India</span></p>
       </div>
       <div className="project-layout">
-        <a className="project-visual" href={project.webapp} aria-label="Open the PratsPilot live demo">
-          <img src={project.image} alt="PratsPilot dashboard with agents, workflows, tools, and run controls" loading="lazy" />
-        </a>
+        <DepthStage className="project-stage">
+          <div className="depth-entry project-entry">
+            <div className="depth-rig project-rig">
+              <div className="project-backplane" aria-hidden="true" />
+              <a className="project-visual" href={project.webapp} aria-label="Open the PratsPilot live demo">
+                <img src={project.image} alt="PratsPilot dashboard with agents, workflows, tools, and run controls" loading="lazy" />
+              </a>
+              <div className="project-overlay" aria-hidden="true"><span />{features[active][0]}</div>
+            </div>
+          </div>
+        </DepthStage>
         <div className="project-info">
           <p className="label">ASP.NET Core / React</p>
           <h3>An agentic AI workflow platform.</h3>
@@ -55,7 +100,7 @@ export default function App() {
         <div className="shell nav">
           <a className="wordmark" href="#main">Prateek<span>.</span></a>
           <nav aria-label="Main navigation"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a></nav>
-          <a className="button small" href={Bio.resume} download>Résumé PDF</a>
+          <div className="nav-utilities"><ThemeToggle /><a className="button small" href={Bio.resume} download>Résumé PDF</a></div>
         </div>
       </header>
       <main id="main">
@@ -68,10 +113,17 @@ export default function App() {
             <div className="actions"><a className="button primary" href="#experience">Explore my work</a><a className="button" href={Bio.resume} download>Download résumé</a></div>
           </div>
           <figure className="hero-portrait">
-            <div className="portrait-mat">
-              <div className="portrait-depth"><img src="/HeroImage.jpg" alt="Prateek Mishra at his workstation" /></div>
-              <svg className="portrait-orbit" viewBox="0 0 500 450" aria-hidden="true"><ellipse cx="250" cy="222" rx="230" ry="113" transform="rotate(-42 250 222)" /><ellipse cx="250" cy="222" rx="222" ry="124" transform="rotate(25 250 222)" /></svg>
-            </div>
+            <DepthStage className="portrait-scene">
+              <div className="depth-entry portrait-entry">
+                <div className="depth-rig portrait-rig">
+                  <div className="portrait-mat" aria-hidden="true" />
+                  <div className="portrait-depth"><img src="/HeroImage.jpg" alt="Prateek Mishra at his workstation" /></div>
+                  <div className="portrait-orbit orbit-one" aria-hidden="true" />
+                  <div className="portrait-orbit orbit-two" aria-hidden="true" />
+                  <span className="portrait-caption">Bengaluru, India</span>
+                </div>
+              </div>
+            </DepthStage>
             <figcaption><span>Associate Engineer at Ascendion</span><span>Open to .NET roles</span></figcaption>
           </figure>
         </section>
@@ -100,12 +152,17 @@ export default function App() {
         <section id="skills" className="skills-band">
           <div className="shell skills-layout">
             <div><p className="label">Skills</p><h2>My toolkit<span>.</span></h2></div>
-            <dl>
-              <div><dt>Backend</dt><dd>C#, ASP.NET Core, REST APIs, EF Core, SQL Server, JWT</dd></div>
-              <div><dt>Frontend</dt><dd>React, TypeScript, JavaScript, Material UI, Tailwind CSS</dd></div>
-              <div><dt>Automation</dt><dd>Playwright, Selenium WebDriver, pytest, Postman</dd></div>
-              <div><dt>Delivery</dt><dd>Git, GitHub Actions, Azure DevOps, Docker, CI/CD</dd></div>
-            </dl>
+            <DepthStage className="toolkit-stage">
+              <div className="depth-entry toolkit-entry">
+                <div className="depth-rig toolkit-rig">
+                  <dl className="toolkit-grid">{toolkit.map(([title, tools, mark]) => (
+                    <div className="tool-tile" key={title}>
+                      <dt><span className="tool-mark" aria-hidden="true">{mark}</span>{title}</dt><dd>{tools}</dd>
+                    </div>
+                  ))}</dl>
+                </div>
+              </div>
+            </DepthStage>
             <div className="credentials">
               <div><h3>Education</h3><p>B.Tech in Information Technology, VIT Vellore · 2025 · 8.53/10</p></div>
               <div><h3>Recognition</h3><p>Rising Star Award · Pillar of Strength · Exceeds Expectations</p></div>

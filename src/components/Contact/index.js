@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Bio } from '../../data/constants';
+import DepthStage from '../DepthStage';
 
 export default function Contact() {
   const sending = useRef(false);
@@ -46,6 +47,22 @@ export default function Contact() {
         <p>I'm open to full-stack .NET and React roles and backend .NET opportunities.</p>
         <a href={Bio.email}>{Bio.email.slice('mailto:'.length)}</a>
         <a href={Bio.linkedin}>Connect on LinkedIn</a>
+        <DepthStage className="mail-stage">
+          <div className="depth-entry mail-entry" aria-hidden="true">
+            <div className="depth-rig mail-rig">
+              <i className="mail-platform" />
+              <i className="mail-orbit" />
+              <div className="mail-envelope">
+                <i className="mail-letter"><span /><span /><span /></i>
+                <svg viewBox="0 0 180 100" className="mail-front">
+                  <path d="M0 0l90 56L180 0v100H0Z" fill="#2854df" />
+                  <path d="M0 100l90-56 90 56Z" fill="#6f9aff" />
+                  <path d="M0 100l90-56 90 56" fill="none" stroke="#adc6ff" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </DepthStage>
       </div>
       <form className="contact-form" onSubmit={submit} aria-busy={status.state === 'sending'}>
         <div className="contact-fields">
