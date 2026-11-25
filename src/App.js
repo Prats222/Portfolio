@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Typewriter from 'typewriter-effect';
 import Contact from './components/Contact';
-import HeroBgAnimation from './components/HeroBgAnimation';
+import OrbitalScene from './components/OrbitalScene';
 import portrait from './images/HeroImage2.jpg';
 import { Bio, experiences, projects, certifications } from './data/constants';
 import './App.css';
@@ -13,6 +13,25 @@ const skillGroups = [
   ['Automation', 'Playwright, Selenium WebDriver, pytest, Postman'],
   ['Delivery', 'Git, GitHub Actions, Azure DevOps, Docker, CI/CD'],
 ];
+const projectFeatures = [
+  { title: 'Configure agents', copy: 'Choose a model per agent, attach documents as context, and connect built-in tools or custom Python scripts.' },
+  { title: 'Run workflows', copy: 'Chain agents and tools in a visual editor, draft flows with Autopilot, and pause runs at human approval gates.' },
+  { title: 'Compare outputs', copy: 'Put agents head to head in the Arena and inspect scores, step outputs, logs, latency, and estimated cost.' },
+];
+
+function ProjectFeatures() {
+  const [active, setActive] = useState(0);
+  return (
+    <div className="feature-console">
+      <div className="feature-options" role="group" aria-label="Explore PratsPilot features">
+        {projectFeatures.map(({ title }, i) => (
+          <button type="button" key={title} aria-pressed={active === i} onClick={() => setActive(i)}>{title}</button>
+        ))}
+      </div>
+      <p aria-live="polite">{projectFeatures[active].copy}</p>
+    </div>
+  );
+}
 
 function AnimatedRole() {
   const [reduceMotion, setReduceMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -59,15 +78,20 @@ export default function App() {
               </div>
               <p className="hero-meta">Bengaluru, India <span aria-hidden="true">·</span> Associate Engineer at Ascendion</p>
             </div>
-            <figure className="portrait-stage">
-              <div className="hero-motion" aria-hidden="true"><HeroBgAnimation /></div>
-              <div className="portrait-orbit">
+            <div className="hero-art">
+              <OrbitalScene />
+              <figure className="portrait-stage">
                 <div className="portrait-frame"><img src={portrait} alt="Prateek Mishra at his workstation" /></div>
-              </div>
-              <figcaption><span>C# / ASP.NET Core</span><span>React / TypeScript</span></figcaption>
-            </figure>
+                <figcaption><strong>Prateek Mishra</strong><span>C# · ASP.NET Core · React</span></figcaption>
+              </figure>
+            </div>
           </div>
         </section>
+        <div className="shell proof-rail" aria-label="Selected engineering outcomes">
+          <div><strong>1,500</strong><span>PrintAI jobs per day at peak</span></div>
+          <div><strong>85%</strong><span>Fewer status requests with live updates</span></div>
+          <div><strong>250+</strong><span>PrintOS Playwright scripts</span></div>
+        </div>
 
         <section className="section shell" id="experience">
           <div className="section-heading">
@@ -95,13 +119,14 @@ export default function App() {
         <section className="section shell" id="projects">
           <div className="section-heading"><div><p className="eyebrow">Featured project</p><h2>PratsPilot.</h2></div><p className="section-sub">2nd place at Launchpad India</p></div>
           <div className="project-panel">
+            <div className="project-chrome"><span className="project-signal" aria-hidden="true" /><strong>PratsPilot workspace</strong><span>ASP.NET Core / React</span></div>
             <a className="project-image" href={pratsPilot.webapp} aria-label="Open the PratsPilot demo">
               <img src={pratsPilot.image} alt="PratsPilot's agent and workflow dashboard" loading="lazy" />
             </a>
             <div className="project-description">
               <div>
                 <h3>An agentic AI workflow platform</h3>
-                <p>Build agents with document context and custom Python tools. Assemble workflows visually or draft them with Autopilot, pause for human approval, and compare agents head to head in the Arena.</p>
+                <ProjectFeatures />
                 <div className="actions"><a className="button primary" href={pratsPilot.webapp}>Live demo</a><a className="button" href={pratsPilot.github}>Source code</a></div>
               </div>
               <div className="project-metric"><strong>120+</strong><span>concurrent users</span></div>
